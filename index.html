@@ -1,58 +1,193 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zaandam Jiujitsu - Aula Experimental</title>
+    <title>Zaandam Jiujitsu Club - Trial Class</title>
     <style>
-        body { font-family: sans-serif; background: #111; color: white; padding: 20px; display: flex; justify-content: center; }
-        .card { background: #222; padding: 20px; border-radius: 10px; width: 100%; max-width: 400px; border: 1px solid #333; }
-        h2 { color: #d4af37; text-align: center; }
-        label { display: block; margin: 15px 0 5px; }
-        input, select { width: 100%; padding: 10px; box-sizing: border-box; border-radius: 5px; border: 1px solid #444; background: #333; color: white; }
-        button { width: 100%; padding: 15px; margin-top: 20px; background: #d4af37; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0a0a0a;
+            --card-bg: #161616;
+            --text: #ffffff;
+            --input-bg: #222;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 450px;
+            border-top: 4px solid var(--gold);
+        }
+
+        h1 {
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #bbb;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background-color: var(--input-bg);
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--gold);
+            color: black;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #b8962d;
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>ZAANDAM JIUJITSU</h2>
-        <p>Agende sua aula experimental:</p>
+
+<div class="container">
+    <h1>ZAANDAM JIUJITSU CLUB</h1>
+    <div class="subtitle">Book Your Trial Class</div>
+
+    <form id="bookingForm">
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" id="age" placeholder="Age" required>
+            </div>
+            <div class="form-group">
+                <label>Class Date</label>
+                <input type="date" id="classDate" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Weight & Height (For Gi sizing)</label>
+            <input type="text" id="specs" placeholder="e.g. 80kg / 180cm" required>
+        </div>
+
+        <div class="form-group">
+            <label>Guardian's Name (If under 18)</label>
+            <input type="text" id="guardian" placeholder="Parent or legal guardian">
+        </div>
+
+        <div class="form-group">
+            <label>Observations / Medical Notes</label>
+            <textarea id="notes" rows="2" placeholder="Any injuries or remarks?"></textarea>
+        </div>
+
+        <button type="submit">Send to WhatsApp</button>
         
-        <form id="formAgendamento">
-            <label>Nome Completo</label>
-            <input type="text" id="nome" required>
+        <div class="footer-note">
+            Limited spots available. Secure your place today!
+        </div>
+    </form>
+</div>
 
-            <label>Faixa</label>
-            <select id="faixa">
-                <option value="Branca">Branca</option>
-                <option value="Azul">Azul</option>
-                <option value="Roxa">Roxa</option>
-                <option value="Marrom">Marrom</option>
-                <option value="Preta">Preta</option>
-            </select>
+<script>
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-            <label>Dia da Aula</label>
-            <input type="date" id="dia" required>
+        // Data collection
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+        const classDate = document.getElementById('classDate').value.split('-').reverse().join('/');
+        const specs = document.getElementById('specs').value;
+        const guardian = document.getElementById('guardian').value;
+        const notes = document.getElementById('notes').value;
 
-            <button type="submit">Enviar para o WhatsApp</button>
-        </form>
-    </div>
+        const phone = "5521998672999"; // Replace with the academy's phone number
 
-    <script>
-        document.getElementById('formAgendamento').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nome = document.getElementById('nome').value;
-            const faixa = document.getElementById('faixa').value;
-            const dia = document.getElementById('dia').value.split('-').reverse().join('/');
-            
-            const numeroAcademia = "5521998672999"; // Substitua pelo seu número
-            const texto = `Olá! Meu nome é ${nome}. Gostaria de marcar uma aula experimental para o dia ${dia}. Minha faixa é ${faixa}.`;
-            
-            const url = `https://wa.me/${numeroAcademia}?text=${encodeURIComponent(texto)}`;
-            
-            window.location.href = url;
-        });
-    </script>
+        // Message Construction
+        let message = `*ZAANDAM JIUJITSU CLUB - TRIAL CLASS*%0A%0A`;
+        message += `*Name:* ${name}%0A`;
+        message += `*Age:* ${age}%0A`;
+        message += `*Preferred Date:* ${classDate}%0A`;
+        message += `*Size (W/H):* ${specs}%0A`;
+        
+        if(guardian) message += `*Guardian:* ${guardian}%0A`;
+        if(notes) message += `*Notes:* ${notes}%0A`;
+
+        const url = `https://wa.me/${phone}?text=${message}`;
+
+        window.location.href = url;
+    });
+</script>
+
 </body>
 </html>
